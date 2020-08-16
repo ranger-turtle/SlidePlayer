@@ -1,0 +1,42 @@
+﻿<Window x:Class="SlidePlayer.PlaylistPositionSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SlidePlayer"
+        mc:Ignorable="d"
+		x:Name="SettingWin"
+        Title="Playlist Position Settings" Height="136.402" Width="492.776">
+	<Window.Resources>
+		<Style TargetType="{x:Type CheckBox}">
+			<Setter Property="Margin" Value="5,0,0,0"/>
+		</Style>
+		<Style TargetType="{x:Type Button}">
+			<Setter Property="Padding" Value="5"/>
+			<Setter Property="Height" Value="40"/>
+			<Setter Property="MinWidth" Value="90"/>
+			<Setter Property="Margin" Value="5,0"/>
+		</Style>
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="1.1*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="60"/>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Column="0" Content="Probability Factor"/>
+			<Slider x:Name="Slider" Grid.Column="1" Minimum="1" Maximum="30" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding ElementName=SettingWin, Path=ProbabilityFactor, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="321"/>
+			<TextBox Grid.Column="2" Text="{Binding ElementName=Slider, Path=Value, Mode=TwoWay}" Margin="3,0,5,0" VerticalContentAlignment="Center"/>
+		</Grid>
+		<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Content="OK" Click="OKResult" />
+			<Button Content="Cancel" Click="CancelResult" />
+		</StackPanel>
+
+	</Grid>
+</Window>

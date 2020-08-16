@@ -1,0 +1,49 @@
+﻿<Window x:Class="SlidePlayer.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SlidePlayer"
+        mc:Ignorable="d"
+		x:Name="SettingWin"
+        Title="Slide Player Settings" Height="294.618" Width="489.906">
+	<Window.Resources>
+		<Style TargetType="{x:Type CheckBox}">
+			<Setter Property="Margin" Value="5,0,0,0"/>
+		</Style>
+		<Style TargetType="{x:Type Button}">
+			<Setter Property="Padding" Value="5"/>
+			<Setter Property="Height" Value="40"/>
+			<Setter Property="MinWidth" Value="90"/>
+			<Setter Property="Margin" Value="5,0"/>
+		</Style>
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="1.1*"/>
+		</Grid.RowDefinitions>
+		<CheckBox Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Slide rate on pause" IsChecked="{Binding ElementName=SettingWin, Path=SlidingPause}"/>
+		<Grid Grid.Row="1" VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="60"/>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Column="0" Content="Sliding Duration"/>
+			<Slider x:Name="Slider" Grid.Column="1" Minimum="0" Maximum="7" Value="{Binding ElementName=SettingWin, Path=SlidingDuration, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="321"/>
+			<TextBox Grid.Column="2" Text="{Binding ElementName=Slider, Path=Value, StringFormat={}{0:###,0.###}, Mode=TwoWay}" Margin="3,0,5,0" VerticalContentAlignment="Center"/>
+		</Grid>
+		<CheckBox Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Play sound on button press"/>
+		<GroupBox Grid.Row="3" Header="Path to pause sound">
+			<TextBox VerticalContentAlignment="Center"/>
+		</GroupBox>
+		<StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Content="OK" Click="OKResult" />
+			<Button Content="Cancel" Click="CancelResult" />
+		</StackPanel>
+	</Grid>
+</Window>

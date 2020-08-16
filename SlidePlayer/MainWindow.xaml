@@ -5,8 +5,82 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SlidePlayer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+		
+        Title="Slide Player" Height="383.822" Width="585.742" MinHeight="328.822" MinWidth="519.742">
+	<Window.CommandBindings>
+		<CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.addToPlaylistCommand}" Executed="AddToPlaylistCommand_Executed"/>
+		<CommandBinding Command="{x:Static local:MainWindow.removeFromPlaylistCommand}" Executed="RemoveFileFromPlaylist_Executed" CanExecute="RemoveFileFromPlaylist_CanExecute"/>
+		<CommandBinding Command="ApplicationCommands.Save" Executed="SavePlaylist_Executed" CanExecute="CanSavePlaylist"/>
+		<CommandBinding Command="{x:Static local:MainWindow.loadPlaylistCommand}" Executed="LoadPlaylist_Executed"/>
+	</Window.CommandBindings>
+	<Window.Resources>
+		<Style x:Key="PlaybackButton" TargetType="{x:Type Button}">
+			<Setter Property="Width" Value="30"/>
+			<Setter Property="Height" Value="30"/>
+			<Setter Property="Margin" Value="5,-20,5,-20"/>
+			<Setter Property="Focusable" Value="False"/>
+		</Style>
+		<Style x:Key="PlaybackToggleButton" TargetType="{x:Type ToggleButton}">
+			<Setter Property="Width" Value="30"/>
+			<Setter Property="Height" Value="30"/>
+			<Setter Property="Margin" Value="5,-20,5,-20"/>
+			<Setter Property="Focusable" Value="False"/>
+		</Style>
+		<ContextMenu x:Key="cmPlaylistItem">
+			<MenuItem Header="_Play" Click="OpenFileFromPlaylist_Click"/>
+			<MenuItem Header="_Edit" Click="EditPlaylistPosition_Click"/>
+			<MenuItem Header="_Remove" Command="{x:Static local:MainWindow.removeFromPlaylistCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+		</ContextMenu>
+	</Window.Resources>
+	<!-- TODO Make buttons for taskbar thumbnail
+	<Window.TaskbarItemInfo>
+		<TaskbarItemInfo>
+			<TaskbarItemInfo.ThumbButtonInfos>
+				<ThumbButtonInfo Description="Pause" />
+				<ThumbButtonInfo Description="Stop"/>
+			</TaskbarItemInfo.ThumbButtonInfos>
+		</TaskbarItemInfo>
+	</Window.TaskbarItemInfo>-->
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="Auto" MinHeight="40"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<Menu Grid.Row="0">
+			<MenuItem Header="_File">
+				<MenuItem Header="_Open" Command="ApplicationCommands.Open"/>
+				<MenuItem Header="_Add to playlist..." Command="{x:Static local:MainWindow.addToPlaylistCommand}"/>
+				<Separator/>
+				<MenuItem Header="_Save playlist..." Command="ApplicationCommands.Save"/>
+				<MenuItem Header="_Load playlist..." Command="{x:Static local:MainWindow.loadPlaylistCommand}"/>
+				<Separator/>
+				<MenuItem Header="_Exit" Click="Exit"/>
+			</MenuItem>
+			<MenuItem Header="_Playback">
+				<MenuItem Header="_Settings..." Click="Settings_Click"/>
+			</MenuItem>
+		</Menu>
+		<Slider Grid.Row="1" x:Name="MainSlider" Minimum="0" Maximum="1" TickFrequency="1" IsEnabled="False" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="18" Margin="5,10,5,10" IsMoveToPointEnabled="True" Thumb.DragStarted="MainSlider_ThumbDragStart" Thumb.DragCompleted="MainSlider_ThumbDragStop" MouseEnter="Thumb_MouseEnter"/>
+		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left">
+			<Button x:Name="PlayPauseBtn" Focusable="True" Content="Pause" Style="{StaticResource PlaybackButton}" IsEnabled="False" Click="PauseButton_Click" />
+			<Button x:Name="StopBtn" Content="Stop" Style="{StaticResource PlaybackButton}" IsEnabled="False" Click="StopButton_Click" />
+			<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+			<Button x:Name="PrevBtn" Content="Prev" Style="{StaticResource PlaybackButton}" IsEnabled="False" Click="PrevButton_Click" />
+			<Button x:Name="NextBtn" Content="Next" Style="{StaticResource PlaybackButton}" IsEnabled="False" Click="NextButton_Click" />
+			<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+			<ToggleButton x:Name="RecBtn" Content="Rec" Style="{StaticResource PlaybackToggleButton}" IsEnabled="False" Click="RecButton_Click" />
+		</StackPanel>
+		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button x:Name="PlaybackModeBtn" Content="PlayOne" Width="Auto" Style="{StaticResource PlaybackButton}" IsEnabled="False" Click="PlaybackModeButton_Click" />
+			<ToggleButton x:Name="MuteBtn" Content="Mute" Style="{StaticResource PlaybackToggleButton}" IsEnabled="False" Click="MuteButton_Click" />
+			<Slider x:Name="VolumeSlider" IsEnabled="False" IsMoveToPointEnabled="True" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Width="91" Minimum="0" Maximum="1" Value="100" Margin="5,0,5,0" ValueChanged="VolumeSlider_ValueChanged"/>
+		</StackPanel>
+		<GroupBox Header="Playlist" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<ListBox x:Name="Playlist" Focusable="False" AllowDrop="True" ClipToBounds="True" SelectionMode="Single" HorizontalContentAlignment="Stretch" DragEnter="Playlist_DragEnter" DragOver="Playlist_DragEnter" Drop="Playlist_Drop"/>
+		</GroupBox>
+
+	</Grid>
 </Window>
