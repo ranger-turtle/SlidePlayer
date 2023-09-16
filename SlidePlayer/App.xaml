@@ -3,7 +3,69 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SlidePlayer"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
+	<Application.Resources>
+		<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+			<Geometry x:Key="playGeometry">F1 M210,297z M0,0z M120.95239,226.78572L62.020818,158.7563 3.0892519,90.726885 91.470243,73.705359 179.85123,56.683835 150.40181,141.73478z</Geometry>
+			<DrawingGroup x:Key="playDrawingGroup" ClipGeometry="M0,0 V297 H210 V0 H0 Z">
+				<DrawingGroup Opacity="1" Transform="0.18287065,-0.93960308,0.95104625,0.18509778,-53.718962,203.82721">
+					<GeometryDrawing Brush="#FF0000FF" Geometry="{StaticResource playGeometry}" />
+				</DrawingGroup>
+			</DrawingGroup>
+			<DrawingImage x:Key="playDrawingImage" Drawing="{StaticResource playDrawingGroup}" />
+			<Geometry x:Key="prevGeometry">F1 M210,297z M0,0z M120.95239,226.78572L62.020818,158.7563 3.0892519,90.726885 91.470243,73.705359 179.85123,56.683835 150.40181,141.73478z</Geometry>
+			<DrawingGroup x:Key="prevDrawingGroup" ClipGeometry="M0,0 V297 H210 V0 H0 Z">
+				<DrawingGroup.Transform>
+					<TranslateTransform X="63.7202" Y="0" />
+				</DrawingGroup.Transform>
+				<DrawingGroup Opacity="1">
+					<DrawingGroup Transform="-0.1458737,-0.93960308,-0.75863807,0.18509778,253.34888,203.82721">
+						<GeometryDrawing Brush="#FF0000FF" Geometry="{StaticResource prevGeometry}" />
+					</DrawingGroup>
+					<DrawingGroup Transform="-1,0,0,1,0,0">
+						<GeometryDrawing Brush="#FF0000FF">
+							<GeometryDrawing.Geometry>
+								<RectangleGeometry RadiusX="0" RadiusY="0" Rect="-63.7202,45.295,30.6407,172.3874" />
+							</GeometryDrawing.Geometry>
+						</GeometryDrawing>
+					</DrawingGroup>
+				</DrawingGroup>
+			</DrawingGroup>
+			<DrawingImage x:Key="prevDrawingImage" Drawing="{StaticResource prevDrawingGroup}" />
+			<Geometry x:Key="nextGeometry">F1 M210,297z M0,0z M120.95239,226.78572L62.020818,158.7563 3.0892519,90.726885 91.470243,73.705359 179.85123,56.683835 150.40181,141.73478z</Geometry>
+			<DrawingGroup x:Key="nextDrawingGroup" ClipGeometry="M0,0 V297 H210 V0 H0 Z">
+				<DrawingGroup Opacity="1">
+					<DrawingGroup Transform="0.1458737,-0.93960308,0.75863807,0.18509778,-36.158582,203.82721">
+						<GeometryDrawing Brush="#FF0000FF" Geometry="{StaticResource nextGeometry}" />
+					</DrawingGroup>
+					<GeometryDrawing Brush="#FF0000FF">
+						<GeometryDrawing.Geometry>
+							<RectangleGeometry RadiusX="0" RadiusY="0" Rect="153.4701,45.295,30.6407,172.3874" />
+						</GeometryDrawing.Geometry>
+					</GeometryDrawing>
+				</DrawingGroup>
+			</DrawingGroup>
+			<DrawingImage x:Key="nextDrawingImage" Drawing="{StaticResource nextDrawingGroup}" />
+			<DrawingGroup x:Key="pauseDrawingGroup" ClipGeometry="M0,0 V297 H210 V0 H0 Z">
+				<DrawingGroup.Transform>
+					<TranslateTransform X="184.1108" Y="0" />
+				</DrawingGroup.Transform>
+				<DrawingGroup Opacity="1">
+					<DrawingGroup Transform="-1,0,0,1,0,0">
+						<GeometryDrawing Brush="#FF0000FF">
+							<GeometryDrawing.Geometry>
+								<RectangleGeometry RadiusX="0" RadiusY="0" Rect="-87.9222,45.295,54.8427,172.3874" />
+							</GeometryDrawing.Geometry>
+						</GeometryDrawing>
+					</DrawingGroup>
+					<DrawingGroup Transform="-1,0,0,1,0,0">
+						<GeometryDrawing Brush="#FF0000FF">
+							<GeometryDrawing.Geometry>
+								<RectangleGeometry RadiusX="0" RadiusY="0" Rect="-184.1108,45.3305,54.8427,172.3874" />
+							</GeometryDrawing.Geometry>
+						</GeometryDrawing>
+					</DrawingGroup>
+				</DrawingGroup>
+			</DrawingGroup>
+			<DrawingImage x:Key="pauseDrawingImage" Drawing="{StaticResource pauseDrawingGroup}" />
+		</ResourceDictionary></Application.Resources>
 </Application>

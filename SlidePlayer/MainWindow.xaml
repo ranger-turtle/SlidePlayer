@@ -33,15 +33,15 @@
 			<MenuItem Header="_Remove" Command="{x:Static local:MainWindow.removeFromPlaylistCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
 		</ContextMenu>
 	</Window.Resources>
-	<!-- TODO Make buttons for taskbar thumbnail
 	<Window.TaskbarItemInfo>
 		<TaskbarItemInfo>
 			<TaskbarItemInfo.ThumbButtonInfos>
-				<ThumbButtonInfo Description="Pause" />
-				<ThumbButtonInfo Description="Stop"/>
+				<ThumbButtonInfo x:Name="PrevThumbBtn" IsEnabled="False" Description="Prev" ImageSource="{StaticResource prevDrawingImage}" Click="PrevThumbButton_Click"/>
+				<ThumbButtonInfo x:Name="PlayPauseThumbBtn" IsEnabled="False" Description="Pause" ImageSource="{StaticResource pauseDrawingImage}" Click="PauseThumbButton_Click"/>
+				<ThumbButtonInfo x:Name="NextThumbBtn" IsEnabled="False" Description="Next" ImageSource="{StaticResource nextDrawingImage}" Click="NextThumbButton_Click"/>
 			</TaskbarItemInfo.ThumbButtonInfos>
 		</TaskbarItemInfo>
-	</Window.TaskbarItemInfo>-->
+	</Window.TaskbarItemInfo>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto"/>

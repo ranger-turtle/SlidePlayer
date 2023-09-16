@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Media;
+using System.Diagnostics;
 
 namespace SlidePlayer
 {
@@ -16,10 +17,7 @@ namespace SlidePlayer
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	// TODO Make buttons for taskbar thumbnail
-	// TODO Make probability random setting
 	// TODO Add sound play on button press
-	// TODO Separate tasks related to random playing to another class
-	// TODO Make playlist save
 	// TODO Design icon depicting play button riding a snowboard
 	public partial class MainWindow : Window
 	{
@@ -84,6 +82,7 @@ namespace SlidePlayer
 					#region Dr. WPF's code (https://social.msdn.microsoft.com/Forums/vstudio/en-US/5fa7cbc2-c99f-4b71-b46c-f156bdf0a75a/making-the-slider-slide-with-one-click-anywhere-on-the-slider)e
 					Thumb thumb = (MainSlider.Template.FindName("PART_Track", MainSlider) as Track).Thumb;
 					thumb.MouseEnter += new MouseEventHandler(Thumb_MouseEnter);
+					#endregion
 					_thumbActivated = true;
 					PlayPauseBtn.IsEnabled =
 					StopBtn.IsEnabled =
@@ -93,8 +92,10 @@ namespace SlidePlayer
 					NextBtn.IsEnabled =
 					RecBtn.IsEnabled =
 					PlaybackModeBtn.IsEnabled =
+					PrevThumbBtn.IsEnabled =
+					PlayPauseThumbBtn.IsEnabled =
+					NextThumbBtn.IsEnabled =
 					MuteBtn.IsEnabled = true;
-					#endregion
 				}
 				if (timer == null)
 				{
@@ -186,7 +187,15 @@ namespace SlidePlayer
 			}
 		}
 
-		private async void PauseButton_Click(object sender, RoutedEventArgs e)
+		private void PauseThumbButton_Click(object sender, EventArgs e) => PrepareToPause();
+
+		private void PauseButton_Click(object sender = null, RoutedEventArgs e = null)
+		{
+			PrepareToPause();
+			e.Handled = true;
+		}
+
+		private async void PrepareToPause()
 		{
 			if (_slidingPauseEnabled)
 			{
@@ -200,10 +209,11 @@ namespace SlidePlayer
 				timer.Stop();
 				SwitchToPlay();
 			}
-			e.Handled = true;
 		}
 
-		private void PlayButton_Click(object sender, RoutedEventArgs e)
+		private void PlayThumbButton_Click(object sender, EventArgs e) => PlayButton_Click(sender);
+
+		private void PlayButton_Click(object sender = null, RoutedEventArgs e = null)
 		{
 			stream.Play();
 			timer.Start();
@@ -215,6 +225,9 @@ namespace SlidePlayer
 			PlayPauseBtn.Click -= PauseButton_Click;
 			PlayPauseBtn.Click += PlayButton_Click;
 			PlayPauseBtn.Content = "Play";
+			PlayPauseThumbBtn.Click -= PauseThumbButton_Click;
+			PlayPauseThumbBtn.Click += PlayThumbButton_Click;
+			PlayPauseThumbBtn.ImageSource = FindResource("playDrawingImage") as DrawingImage;
 		}
 
 		private void SwitchToPause()
@@ -222,6 +235,9 @@ namespace SlidePlayer
 			PlayPauseBtn.Click += PauseButton_Click;
 			PlayPauseBtn.Click -= PlayButton_Click;
 			PlayPauseBtn.Content = "Pause";
+			PlayPauseThumbBtn.Click += PauseThumbButton_Click;
+			PlayPauseThumbBtn.Click -= PlayThumbButton_Click;
+			PlayPauseThumbBtn.ImageSource = FindResource("pauseDrawingImage") as DrawingImage;
 		}
 
 		private void StopButton_Click(object sender = null, RoutedEventArgs e = null)
@@ -231,6 +247,8 @@ namespace SlidePlayer
 			MainSlider.Value = 0;
 			SwitchToPlay();
 		}
+
+		private void PrevThumbButton_Click(object sender = null, EventArgs e = null) => PrevButton_Click();
 
 		private void PrevButton_Click(object sender = null, RoutedEventArgs e = null)
 		{
@@ -247,6 +265,8 @@ namespace SlidePlayer
 				OpenAudioFile(_currentPlaylistPosition.FileName);
 			}
 		}
+
+		private void NextThumbButton_Click(object sender, EventArgs e) => NextButton_Click();
 
 		private void NextButton_Click(object sender = null, RoutedEventArgs e = null)
 		{
